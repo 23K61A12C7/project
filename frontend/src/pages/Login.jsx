@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
-  Button,
   TextField,
+  Button,
   Typography,
-  FormControl,
-  InputLabel,
   Select,
   MenuItem,
-  Card,
-  CardContent,
-  Avatar
+  FormControl,
+  InputLabel,
+  Paper
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import LogoBar from "../components/LogoBar";   // import header
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -21,67 +20,69 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (role === "student") navigate("/result");
-    else if (role === "admin") navigate("/admin");
-    else alert("Please select a role!");
+    if (role === "student") {
+      navigate("/result");
+    } else if (role === "admin") {
+      navigate("/admin");
+    }
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      height="100vh"
-      bgcolor="#f4f6f8"
-    >
-      <Card sx={{ width: 350, p: 2, border: "2px solid #1976d2", borderRadius: 3 }}>
-        <CardContent sx={{ textAlign: "center" }}>
-          {/* Logo Header */}
-          <Avatar
-            src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
-            sx={{ width: 70, height: 70, margin: "auto", mb: 2 }}
+    <Box>
+      {/* Header with logo */}
+      <LogoBar />
+
+      {/* Login box */}
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="80vh"
+      >
+        <Paper elevation={3} sx={{ padding: 4, width: 350, border: "1px solid #ddd" }}>
+          <Typography variant="h5" gutterBottom textAlign="center">
+            Login
+          </Typography>
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-          {/* Form Fields */}
-          <Box display="flex" flexDirection="column" gap={2}>
-            <TextField
-              label="Username"
-              variant="outlined"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <TextField
-              label="Password"
-              type="password"
-              variant="outlined"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <FormControl sx={{ width: "100%" }}>
-              <InputLabel>Role</InputLabel>
-              <Select
-                value={role}
-                label="Role"
-                onChange={(e) => setRole(e.target.value)}
-              >
-                <MenuItem value="student">Student</MenuItem>
-                <MenuItem value="admin">Admin</MenuItem>
-              </Select>
-            </FormControl>
-
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleLogin}
-              sx={{ mt: 1 }}
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Role</InputLabel>
+            <Select
+              value={role}
+              label="Role"
+              onChange={(e) => setRole(e.target.value)}
+              sx={{ width: 200, margin: "auto" }}
             >
-              Login
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
+              <MenuItem value="student">Student</MenuItem>
+              <MenuItem value="admin">Admin</MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            fullWidth
+            variant="contained"
+            sx={{ mt: 2 }}
+            onClick={handleLogin}
+          >
+            Login
+          </Button>
+        </Paper>
+      </Box>
     </Box>
   );
 }
+
 
 
